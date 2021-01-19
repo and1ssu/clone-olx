@@ -33,11 +33,11 @@ const Page = () => {
 
     const getAdsList = async () => {
         setLoading(true);
-        let offset = (currentPage-1) * 2;
+        let offset = (currentPage-1) * 9;
 
         const json = await api.getAds({
             sort:'desc',
-            limit:2,
+            limit:9,
             q,
             cat,
             state,

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useApi from '../../helpers/OlxAPI';
 
 import { PageContainer } from '../../components/MainComponents';
-import AdItem from '../../components/partials/adItem';
+import AdItem from '../../components/partials/AdItem';
 
 const Page = () => {
     const api = useApi();

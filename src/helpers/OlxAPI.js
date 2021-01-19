@@ -1,6 +1,29 @@
 import Cookies from "js-cookie";
 import qs from "qs";
+
 const BASEAPI = "http://alunos.b7web.com.br:501";
+
+const apiFetchFile = async (endpoint, body) => {
+    if (!body.token) {
+        let token = Cookies.get('token');
+        if (token) {
+            body.append('token', token);
+        }
+    }
+    const res = await fetch(BASEAPI + endpoint, {
+        method: 'POST',
+        body
+    });
+    const json = await res.json();
+
+    if (json.notallowed) {
+        window.location.href = '/signin';
+        return;
+    }
+
+    return json;
+}
+
 const apiFetchPost = async (endpoint, body) => {
     if (!body.token) {
         //nao esta mandando nenhum tipo de token
@@ -49,10 +72,10 @@ const OlxAPI = {
         return json;
     },
 
-    register:async (name, email, password, stateLoc) => {
+    register: async (name, email, password, stateLoc) => {
         const json = await apiFetchPost(
             '/user/signup',
-            {name, email, password, state:stateLoc}
+            { name, email, password, state: stateLoc }
         );
         return json;
     },
@@ -61,18 +84,18 @@ const OlxAPI = {
     getStates: async () => {
         const json = await apiFetchGet(
             "/states"
-            );
+        );
         return json.states;
     },
 
-    getCategories:async () => {
+    getCategories: async () => {
         const json = await apiFetchGet(
             '/categories'
         );
         return json.categories;
     },
 
-    getAds:async (options) =>{
+    getAds: async (options) => {
         const json = await apiFetchGet(
             '/ad/list',
             options
@@ -80,12 +103,20 @@ const OlxAPI = {
         return json;
     },
 
-    getAd:async (id, other = false) => {
+    getAd: async (id, other = false) => {
         const json = await apiFetchGet(
             '/ad/item',
-            {id, other}
+            { id, other }
+        );
+        return json;
+    },
+    addAd: async (fData) => {
+        const json = await apiFetchFile(
+            '/ad/add',
+            fData
         );
         return json;
     }
+
 };
 export default () => OlxAPI;

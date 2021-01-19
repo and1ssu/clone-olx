@@ -6,7 +6,7 @@ import useApi from '../../helpers/OlxAPI';
 import 'react-slideshow-image/dist/styles.css';
 
 import { PageContainer } from '../../components/MainComponents';
-import AdItem from '../../components/partials/adItem';
+import AdItem from '../../components/partials/AdItem';
 
 const Page = () => {
     const api = useApi();
@@ -88,7 +88,7 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
-                <div className="rightSide">
+                <div className="rightSide"> 
                     <div className="box box--padding">
                         {loading && <Fake height={20} />}
                         {adInfo.priceNegotiable &&
